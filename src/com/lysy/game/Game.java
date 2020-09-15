@@ -37,9 +37,9 @@ public class Game {
         figures.add(bishopR);
         figures.add(queen);
         figures.add(king);
-//        for (int i = 0; i < Game.sizeOfMap; i++) {
-//            figures.add(new Pawn("P" + (i + 1) + "_W", Util.Turn.WHITE, new Point(i, 1)));
-//        }
+        for (int i = 0; i < Game.sizeOfMap; i++) {
+            figures.add(new Pawn("P" + (i + 1) + "_W", Util.Turn.WHITE, new Point(i, 1)));
+        }
 
         rookL = new Rook("RR_B", Util.Turn.BLACK, new Point(0, 7));
         knightL = new Knight("RK_B", Util.Turn.BLACK, new Point(1, 7));
@@ -117,5 +117,9 @@ public class Game {
             move = new Move(line, figures, Game.turn);
         } while (line.length() == 6 && move.isFigure());
         return move;
+    }
+
+    public static List<Figure> getFigures() {
+        return figures;
     }
 }

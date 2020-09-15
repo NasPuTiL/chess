@@ -1,5 +1,6 @@
 package com.lysy.figure;
 
+import com.lysy.game.Game;
 import com.lysy.util.Util;
 
 import java.awt.*;
@@ -12,12 +13,112 @@ public class Queen extends Figure {
     }
 
     @Override
-    protected boolean checkFieldIsAvaliable(List<Point> posibleMoves, List<Figure> figures, int x, int y) {
-        return false;
+    public ArrayList<Point> getListOfPosibleMoves(List<Figure> figures) {
+        List<Point> posibleMoves = new ArrayList<>();
+        generateStrightLines(posibleMoves, figures);
+        generateDiagonalsLines(posibleMoves, figures);
+        return (ArrayList<Point>) posibleMoves;
     }
 
-    @Override
-    public ArrayList<Point> getListOfPosibleMoves(List<Figure> figures) {
-        return null;
+    private void generateDiagonalsLines(List<Point> posibleMoves, List<Figure> figures) {
+        int startX = (int) this.position.getX();
+        int startY = (int) this.position.getY();
+
+        int tmpX = startX;
+        int tmpY = startY;
+        for (; ; ) {
+            tmpX--;
+            tmpY--;
+            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvaliable(posibleMoves, figures, tmpX, tmpY)) {
+                posibleMoves.add(new Point(tmpX, tmpY));
+            } else {
+                break;
+            }
+        }
+
+        tmpX = startX;
+        tmpY = startY;
+        for ( ; ; ) {
+            tmpX--;
+            tmpY++;
+            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvaliable(posibleMoves, figures, tmpX, tmpY)) {
+                posibleMoves.add(new Point(tmpX, tmpY));
+            } else {
+                break;
+            }
+        }
+
+        tmpX = startX;
+        tmpY = startY;
+        for ( ; ; ) {
+            tmpX++;
+            tmpY--;
+            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvaliable(posibleMoves, figures, tmpX, tmpY)) {
+                posibleMoves.add(new Point(tmpX, tmpY));
+            } else {
+                break;
+            }
+        }
+
+        tmpX = startX;
+        tmpY = startY;
+        for ( ; ; ) {
+            tmpX++;
+            tmpY++;
+            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvaliable(posibleMoves, figures, tmpX, tmpY)) {
+                posibleMoves.add(new Point(tmpX, tmpY));
+            } else {
+                break;
+            }
+        }
+    }
+
+    private void generateStrightLines(List<Point> posibleMoves, List<Figure> figures) {
+        int startX = (int) this.position.getX();
+        int startY = (int) this.position.getY();
+
+        int tmpX = startX;
+        int tmpY = startY;
+        for (; ; ) {
+            tmpX++;
+            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvaliable(posibleMoves, figures, tmpX, tmpY)) {
+                posibleMoves.add(new Point(tmpX, tmpY));
+            } else {
+                break;
+            }
+        }
+
+        tmpX = startX;
+        tmpY = startY;
+        for (; ; ) {
+            tmpX--;
+            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvaliable(posibleMoves, figures, tmpX, tmpY)) {
+                posibleMoves.add(new Point(tmpX, tmpY));
+            } else {
+                break;
+            }
+        }
+
+        tmpX = startX;
+        tmpY = startY;
+        for (; ; ) {
+            tmpY++;
+            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvaliable(posibleMoves, figures, tmpX, tmpY)) {
+                posibleMoves.add(new Point(tmpX, tmpY));
+            } else {
+                break;
+            }
+        }
+
+        tmpX = startX;
+        tmpY = startY;
+        for (; ; ) {
+            tmpY--;
+            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvaliable(posibleMoves, figures, tmpX, tmpY)) {
+                posibleMoves.add(new Point(tmpX, tmpY));
+            } else {
+                break;
+            }
+        }
     }
 }
