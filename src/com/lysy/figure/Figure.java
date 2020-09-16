@@ -49,7 +49,11 @@ public abstract class Figure {
 
     public abstract ArrayList<Point> getListOfPosibleMoves(List<Figure> figures);
 
-    protected Point getPosition() {
+    public Point getPosition() {
         return this.position;
+    }
+
+    public void setPosition(Point position){
+        this.position = position;
     }
 }

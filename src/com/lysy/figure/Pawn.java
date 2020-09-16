@@ -62,7 +62,7 @@ public class Pawn extends Figure {
     private boolean checkEnemyPositionFor(int tmpX, int tmpY) {
         Point p = new Point(tmpX, tmpY);
         for(Figure f : Game.getFigures()){
-            if(f.color != this.color && f.position == p){
+            if(f.color != this.color && f.position.getX() == p.getX() && f.position.getY() == p.getY()){
                 return true;
             }
         }
