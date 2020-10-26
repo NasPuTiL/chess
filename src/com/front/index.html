@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>TK - chess</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <!--	<script type="text/javascript" src="js/chess.js"></script>-->
+    <link rel="stylesheet" href="style.css">
+    <!--    <base href="src/com/front"/>-->
+    <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css"
+          integrity="sha384-q94+BZtLrkL1/ohfjR8c6L+A6qzNH9R2hBLwyoAfu3i/WCvQjzL2RQJ3uNHDISdU" crossorigin="anonymous">
+</head>
+<body>
+<div id="myBoard"></div>
+<button id="startBtn">Start Position</button>
+<button id="clearBtn">Clear Board</button>
+<script src="js/jquery-3.5.1.min.js"></script>
+<script src="js/chessboard-1.0.0.min.js"></script>
+<script>
+    var config = {
+        draggable: true,
+        dropOffBoard: 'snapback',
+        sparePieces: false,
+        onDrop: onDrop,
+        position: 'start',
+        // onDragStart: onDragStart
+    };
+    board = Chessboard('myBoard', config)
+
+    /*
+        // prevent "browser drag" of the black king
+        $('.hero-inner-556fe img').on('mousedown', function (evt) {
+            evt.preventDefault()
+        })
+
+        // prevent hover problems on touch devices
+        if (isTouchDevice()) {
+            $('.navbar-a57cc').removeClass('hover-effect')
+        }
+    */
+
+
+    function onDragStart(source, piece, position, orientation) {
+        console.log('Drag started:')
+        console.log('Source: ' + source)
+        console.log('Piece: ' + piece)
+        console.log('Position: ' + Chessboard.objToFen(position))
+        console.log('Orientation: ' + orientation)
+        console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+    }
+
+    function onDrop(source, target, piece, newPos, oldPos, orientation) {
+		var myArray=java.lang.reflect.Array.newInstance(java.lang.String,5);
+    	console.log(myArray)
+		if ((orientation === 'white' && piece.search(/^w/) === -1) ||
+            (orientation === 'black' && piece.search(/^b/) === -1)) {
+            return 'snapback'
+        }
+
+        console.log('Source: ' + source)
+        console.log('Target: ' + target)
+        console.log('Piece: ' + piece)
+        console.log('New position: ' + Chessboard.objToFen(newPos))
+        console.log('Old position: ' + Chessboard.objToFen(oldPos))
+        console.log('Orientation: ' + orientation)
+        console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+    }
+
+</script>
+</body>
+</html>

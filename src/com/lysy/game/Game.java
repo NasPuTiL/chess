@@ -3,6 +3,7 @@ package com.lysy.game;
 import com.lysy.figure.*;
 import com.lysy.util.Move;
 import com.lysy.util.Util;
+import netscape.javascript.JSObject;
 
 import java.awt.*;
 import java.io.IOException;
@@ -205,6 +206,8 @@ public class Game {
         String line;
         Move move;
         do {
+            JSObject x;
+            x =
             System.out.println("//Scheme:Name position.x position.y");
             System.out.print("Tourn (" + this.turn.name() + "), Get move:");
 
