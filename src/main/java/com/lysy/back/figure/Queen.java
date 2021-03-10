@@ -1,7 +1,7 @@
-package com.lysy.figure;
+package com.lysy.back.figure;
 
-import com.lysy.game.Game;
-import com.lysy.util.Util;
+import com.lysy.back.game.Game;
+import com.lysy.back.util.Util;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -13,11 +13,11 @@ public class Queen extends Figure {
     }
 
     @Override
-    public ArrayList<Point> getListOfPosibleMoves(List<Figure> figures) {
+    public List<Point> getListOfPossibleMoves(List<Figure> figures) {
         List<Point> posibleMoves = new ArrayList<>();
         generateStrightLines(posibleMoves, figures);
         generateDiagonalsLines(posibleMoves, figures);
-        return (ArrayList<Point>) posibleMoves;
+        return posibleMoves;
     }
 
     private void generateDiagonalsLines(List<Point> posibleMoves, List<Figure> figures) {
@@ -29,7 +29,7 @@ public class Queen extends Figure {
         for (; ; ) {
             tmpX--;
             tmpY--;
-            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvaliable(posibleMoves, figures, tmpX, tmpY)) {
+            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvailable(posibleMoves, figures, tmpX, tmpY)) {
                 posibleMoves.add(new Point(tmpX, tmpY));
             } else {
                 break;
@@ -38,10 +38,10 @@ public class Queen extends Figure {
 
         tmpX = startX;
         tmpY = startY;
-        for ( ; ; ) {
+        for (; ; ) {
             tmpX--;
             tmpY++;
-            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvaliable(posibleMoves, figures, tmpX, tmpY)) {
+            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvailable(posibleMoves, figures, tmpX, tmpY)) {
                 posibleMoves.add(new Point(tmpX, tmpY));
             } else {
                 break;
@@ -50,10 +50,10 @@ public class Queen extends Figure {
 
         tmpX = startX;
         tmpY = startY;
-        for ( ; ; ) {
+        for (; ; ) {
             tmpX++;
             tmpY--;
-            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvaliable(posibleMoves, figures, tmpX, tmpY)) {
+            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvailable(posibleMoves, figures, tmpX, tmpY)) {
                 posibleMoves.add(new Point(tmpX, tmpY));
             } else {
                 break;
@@ -62,10 +62,10 @@ public class Queen extends Figure {
 
         tmpX = startX;
         tmpY = startY;
-        for ( ; ; ) {
+        for (; ; ) {
             tmpX++;
             tmpY++;
-            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvaliable(posibleMoves, figures, tmpX, tmpY)) {
+            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvailable(posibleMoves, figures, tmpX, tmpY)) {
                 posibleMoves.add(new Point(tmpX, tmpY));
             } else {
                 break;
@@ -81,7 +81,7 @@ public class Queen extends Figure {
         int tmpY = startY;
         for (; ; ) {
             tmpX++;
-            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvaliable(posibleMoves, figures, tmpX, tmpY)) {
+            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvailable(posibleMoves, figures, tmpX, tmpY)) {
                 posibleMoves.add(new Point(tmpX, tmpY));
             } else {
                 break;
@@ -92,7 +92,7 @@ public class Queen extends Figure {
         tmpY = startY;
         for (; ; ) {
             tmpX--;
-            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvaliable(posibleMoves, figures, tmpX, tmpY)) {
+            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvailable(posibleMoves, figures, tmpX, tmpY)) {
                 posibleMoves.add(new Point(tmpX, tmpY));
             } else {
                 break;
@@ -103,7 +103,7 @@ public class Queen extends Figure {
         tmpY = startY;
         for (; ; ) {
             tmpY++;
-            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvaliable(posibleMoves, figures, tmpX, tmpY)) {
+            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvailable(posibleMoves, figures, tmpX, tmpY)) {
                 posibleMoves.add(new Point(tmpX, tmpY));
             } else {
                 break;
@@ -114,7 +114,7 @@ public class Queen extends Figure {
         tmpY = startY;
         for (; ; ) {
             tmpY--;
-            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvaliable(posibleMoves, figures, tmpX, tmpY)) {
+            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvailable(posibleMoves, figures, tmpX, tmpY)) {
                 posibleMoves.add(new Point(tmpX, tmpY));
             } else {
                 break;

@@ -1,1 +1,1 @@
-# chess version 1.0
+# chess version 1.1

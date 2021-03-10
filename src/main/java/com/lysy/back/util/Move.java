@@ -1,6 +1,6 @@
-package com.lysy.util;
+package com.lysy.back.util;
 
-import com.lysy.figure.Figure;
+import com.lysy.back.figure.Figure;
 
 import java.awt.*;
 import java.util.List;

@@ -1,7 +1,7 @@
-package com.lysy.figure;
+package com.lysy.back.figure;
 
-import com.lysy.game.Game;
-import com.lysy.util.Util;
+import com.lysy.back.game.Game;
+import com.lysy.back.util.Util;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ public class Knight extends Figure {
     }
 
     @Override
-    public ArrayList<Point> getListOfPosibleMoves(List<Figure> figures) {
+    public List<Point> getListOfPossibleMoves(List<Figure> figures) {
         List<Point> posibleMoves = new ArrayList<>();
         int startX = (int) this.position.getX();
         int startY = (int) this.position.getY();
@@ -22,11 +22,11 @@ public class Knight extends Figure {
         for (int i = 0; i < posibilities.length; i++) {
             int tmpX = posibilities[i][0];
             int tmpY = posibilities[i][1];
-            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvaliable(posibleMoves, figures, tmpX, tmpY)) {
+            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvailable(posibleMoves, figures, tmpX, tmpY)) {
                 posibleMoves.add(new Point(tmpX, tmpY));
             }
         }
-        return (ArrayList<Point>) posibleMoves;
+        return posibleMoves;
     }
 
     private int[][] getPosibiliteMoves(int startX, int startY) {

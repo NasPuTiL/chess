@@ -1,7 +1,7 @@
-package com.lysy.figure;
+package com.lysy.back.figure;
 
-import com.lysy.game.Game;
-import com.lysy.util.Util;
+import com.lysy.back.game.Game;
+import com.lysy.back.util.Util;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class Pawn extends Figure {
     }
 
     @Override
-    public ArrayList<Point> getListOfPosibleMoves(List<Figure> figures) {
+    public List<Point> getListOfPossibleMoves(List<Figure> figures) {
         List<Point> posibleMoves = new ArrayList<>();
         int startX = (int) this.position.getX();
         int startY = (int) this.position.getY();
@@ -28,41 +28,41 @@ public class Pawn extends Figure {
 
 
         tmpY = nextStep(tmpY);
-        if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvaliable(posibleMoves, figures, tmpX, tmpY)) {
+        if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvailable(posibleMoves, figures, tmpX, tmpY)) {
             posibleMoves.add(new Point(tmpX, tmpY));
         }
 
         tmpX = startX - 1;
-        if(checkEnemyPositionFor(tmpX, tmpY)) {
-            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvaliable(posibleMoves, figures, tmpX, tmpY)) {
+        if (checkEnemyPositionFor(tmpX, tmpY)) {
+            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvailable(posibleMoves, figures, tmpX, tmpY)) {
                 posibleMoves.add(new Point(tmpX, tmpY));
             }
         }
 
         tmpX = startX + 1;
-        if(checkEnemyPositionFor(tmpX, tmpY)) {
-            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvaliable(posibleMoves, figures, tmpX, tmpY)) {
+        if (checkEnemyPositionFor(tmpX, tmpY)) {
+            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvailable(posibleMoves, figures, tmpX, tmpY)) {
                 posibleMoves.add(new Point(tmpX, tmpY));
             }
         }
 
         if (startY == startDir) {
-            tmpX = startX ;
+            tmpX = startX;
             tmpY = nextStep(tmpY);
-            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvaliable(posibleMoves, figures, tmpX, tmpY)) {
+            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvailable(posibleMoves, figures, tmpX, tmpY)) {
                 posibleMoves.add(new Point(tmpX, tmpY));
             }
         }
 
         //TODO: Beating in flight
 
-        return (ArrayList<Point>) posibleMoves;
+        return posibleMoves;
     }
 
     private boolean checkEnemyPositionFor(int tmpX, int tmpY) {
         Point p = new Point(tmpX, tmpY);
-        for(Figure f : Game.getFigures()){
-            if(f.color != this.color && f.position.getX() == p.getX() && f.position.getY() == p.getY()){
+        for (Figure f : Game.getFigures()) {
+            if (f.color != this.color && f.position.getX() == p.getX() && f.position.getY() == p.getY()) {
                 return true;
             }
         }

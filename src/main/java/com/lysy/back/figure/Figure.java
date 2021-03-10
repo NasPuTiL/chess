@@ -1,9 +1,8 @@
-package com.lysy.figure;
+package com.lysy.back.figure;
 
-import com.lysy.util.Util;
+import com.lysy.back.util.Util;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -33,13 +32,13 @@ public abstract class Figure {
         return this.color;
     }
 
-    protected boolean checkFieldIsAvaliable(java.util.List<Point> posibleMoves, java.util.List<Figure> figures, int x, int y) {
+    protected boolean checkFieldIsAvailable(List<Point> possibleMoves, List<Figure> figures, int x, int y) {
         for (Figure f : figures) {
             if (f.getPosition().getX() == x && f.getPosition().getY() == y) {
                 if (f.getTurn() == this.color) {
                     return false;
                 } else {
-                    posibleMoves.add(new Point(x, y));
+                    possibleMoves.add(new Point(x, y));
                     return false;
                 }
             }
@@ -47,13 +46,13 @@ public abstract class Figure {
         return true;
     }
 
-    public abstract ArrayList<Point> getListOfPosibleMoves(List<Figure> figures);
+    public abstract List<Point> getListOfPossibleMoves(List<Figure> figures);
 
     public Point getPosition() {
         return this.position;
     }
 
-    public void setPosition(Point position){
+    public void setPosition(Point position) {
         this.position = position;
     }
 }

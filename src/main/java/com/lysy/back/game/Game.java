@@ -1,12 +1,12 @@
-package com.lysy.game;
+package com.lysy.back.game;
 
-import com.lysy.figure.*;
-import com.lysy.util.Move;
-import com.lysy.util.Util;
+import com.lysy.back.figure.Figure;
+import com.lysy.back.figure.King;
+import com.lysy.back.util.Move;
+import com.lysy.back.util.Util;
 import netscape.javascript.JSObject;
 
 import java.awt.*;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,56 +14,13 @@ import java.util.Scanner;
 public class Game {
     public static final int sizeOfMap = 8;
     private static Util.Turn turn;
-    private static List<Figure> figures = new ArrayList<>(32);
-    private static List<Figure> denseFigures = new ArrayList<>();
+    private static List<Figure> figures;
+    private static List<Figure> denseFigures;
 
     public Game() {
         Game.turn = Util.Turn.WHITE;
-        initBoard();
-    }
-
-    private void initBoard() {
-        Figure rookL = new Rook("RR_W", Util.Turn.WHITE, new Point(0, 0));
-        Figure knightL = new Knight("RK_W", Util.Turn.WHITE, new Point(1, 0));
-        Figure bishopL = new Bishop("RB_W", Util.Turn.WHITE, new Point(2, 0));
-        Figure queen = new Queen("Q__W", Util.Turn.WHITE, new Point(3, 0));
-        Figure king = new King("K__W", Util.Turn.WHITE, new Point(4, 0));
-        Figure knightR = new Knight("LK_W", Util.Turn.WHITE, new Point(5, 0));
-        Figure bishopR = new Bishop("LB_W", Util.Turn.WHITE, new Point(6, 0));
-        Figure rookR = new Rook("LR_W", Util.Turn.WHITE, new Point(7, 0));
-
-        figures.add(knightL);
-        figures.add(knightR);
-        figures.add(rookL);
-        figures.add(rookR);
-        figures.add(bishopL);
-        figures.add(bishopR);
-        figures.add(queen);
-        figures.add(king);
-        for (int i = 0; i < Game.sizeOfMap; i++) {
-            figures.add(new Pawn("P" + (i + 1) + "_W", Util.Turn.WHITE, new Point(i, 1)));
-        }
-
-        rookL = new Rook("RR_B", Util.Turn.BLACK, new Point(0, 7));
-        knightL = new Knight("RK_B", Util.Turn.BLACK, new Point(1, 7));
-        bishopL = new Bishop("RB_B", Util.Turn.BLACK, new Point(2, 7));
-        queen = new Queen("Q__B", Util.Turn.BLACK, new Point(3, 7));
-        king = new King("K__B", Util.Turn.BLACK, new Point(4, 7));
-        knightR = new Knight("RK_B", Util.Turn.BLACK, new Point(5, 7));
-        bishopR = new Bishop("LB_B", Util.Turn.BLACK, new Point(6, 7));
-        rookR = new Rook("LR_B", Util.Turn.BLACK, new Point(7, 7));
-
-        figures.add(knightL);
-        figures.add(knightR);
-        figures.add(rookL);
-        figures.add(rookR);
-        figures.add(bishopL);
-        figures.add(bishopR);
-        figures.add(queen);
-        figures.add(king);
-        for (int i = 0; i < Game.sizeOfMap; i++) {
-            figures.add(new Pawn("P" + (i + 1) + "_B", Util.Turn.BLACK, new Point(i, 6)));
-        }
+        Game.figures = new ArrayList<>(Util.initBoard());
+        Game.denseFigures = new ArrayList<>();
     }
 
     private void drawMap() {
@@ -119,8 +76,8 @@ public class Game {
             }
 
             Point position = f.getPosition();
-            ArrayList<Point> listOfPosibleMoves = f.getListOfPosibleMoves(figures);
-            for (Point p : listOfPosibleMoves) {
+            List<Point> listOfPossibleMoves = f.getListOfPossibleMoves(figures);
+            for (Point p : listOfPossibleMoves) {
                 f.setPosition(p);
                 if (!check(move)) {
                     f.setPosition(position);
@@ -165,14 +122,13 @@ public class Game {
         if (figure == null) {
             return false;
         }
-        List<Point> listOfPosibleMoves = new ArrayList<>(figure.getListOfPosibleMoves(figures));
-        System.out.println("listOfPosibleMoves = " + listOfPosibleMoves);
+        List<Point> listOfPossibleMoves = new ArrayList<>(figure.getListOfPossibleMoves(figures));
 
         if (check(move)) {
             return false;
         }
-        ;
-        return listOfPosibleMoves.contains(move.getPosition());
+
+        return listOfPossibleMoves.contains(move.getPosition());
     }
 
     private boolean check(Move move) {
@@ -183,7 +139,7 @@ public class Game {
             if (f.getTurn() == turn) {
                 break;
             }
-            if (f.getListOfPosibleMoves(figures).contains(point)) {
+            if (f.getListOfPossibleMoves(figures).contains(point)) {
                 return true;
             }
 
@@ -206,13 +162,10 @@ public class Game {
         String line;
         Move move;
         do {
-            JSObject x;
-            x =
             System.out.println("//Scheme:Name position.x position.y");
             System.out.print("Tourn (" + this.turn.name() + "), Get move:");
 
-            line = scan.nextLine();
-            line.replaceAll(" ", "");
+            line = scan.nextLine().trim();
             move = new Move(line, figures, Game.turn);
         } while (line.length() == 6 && move.isFigure());
         return move;
