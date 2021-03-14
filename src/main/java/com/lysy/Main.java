@@ -1,6 +1,4 @@
-package com.lysy.back;
-
-import com.lysy.back.game.Game;
+package com.lysy;
 
 public class Main {
 

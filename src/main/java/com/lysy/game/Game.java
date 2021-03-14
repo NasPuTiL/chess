@@ -1,10 +1,9 @@
-package com.lysy.back.game;
+package com.lysy.game;
 
-import com.lysy.back.figure.Figure;
-import com.lysy.back.figure.King;
-import com.lysy.back.util.Move;
-import com.lysy.back.util.Util;
-import netscape.javascript.JSObject;
+import com.lysy.figure.Figure;
+import com.lysy.figure.King;
+import com.lysy.util.Move;
+import com.lysy.util.Util;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -171,7 +170,39 @@ public class Game {
         return move;
     }
 
+    public List<String> findPossibleMoves(String square) {
+        int i = square.charAt(0) - 97;
+        int j = (int) square.charAt(1) - 49;
+        Figure figure = findFigure(j, i);
+
+        List<Point> listOfPossibleMoves = figure.getListOfPossibleMoves(Game.getFigures());
+        List<String> results = new ArrayList<>();
+        for (Point point : listOfPossibleMoves) {
+            i = (int) point.getX() + 97;
+            j = (int) point.getY() + 49;
+            char x = (char) i;
+            char y = (char) j;
+            String res = String.valueOf(x);
+            res += String.valueOf(y);
+            results.add(res);
+        }
+        return results;
+    }
+
     public static List<Figure> getFigures() {
         return figures;
+    }
+
+    public boolean isCorrectTurn(String turn) {
+        if (turn.equals("w")) {
+            turn = "WHITE";
+        } else {
+            turn = "BLACK";
+        }
+        if (Game.turn.getValue().equals(turn)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -1,14 +1,30 @@
-package com.lysy.back.util;
+package com.lysy.util;
 
-import com.lysy.back.figure.*;
-import com.lysy.back.game.Game;
+import com.google.gson.Gson;
+import com.lysy.figure.*;
+import com.lysy.game.Game;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Util {
-    public enum Turn {WHITE, BLACK}
+    public static final String RETURN_MESSAGE_OK = new Gson().toJson("OK");
+    public static final String RETURN_APPLICATION_MSSG = "application/json";
+    public static final String RETURN_CODING = "UTF-8";
+    public static final int RETURN_STATUS_CODE_OK = 200;
+
+    public enum Turn {WHITE("WHITE"), BLACK("BLACK");
+        private final String value;
+
+        Turn(String value) {
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
+    }
 
     public static List<Figure> initBoard() {
         List<Figure> figures = new ArrayList<>(32);
