@@ -15,7 +15,7 @@ public class Util {
     public static final int RETURN_STATUS_CODE_OK = 200;
 
     public enum Turn {WHITE("WHITE"), BLACK("BLACK");
-        private final String value;
+        private String value;
 
         Turn(String value) {
             this.value = value;
@@ -23,6 +23,10 @@ public class Util {
 
         public String getValue() {
             return value;
+        }
+
+        public void setValue(String value) {
+            this.value=value;
         }
     }
 
@@ -33,8 +37,8 @@ public class Util {
         Figure bishopL = new Bishop("RB_W", Util.Turn.WHITE, new Point(2, 0));
         Figure queen = new Queen("Q__W", Util.Turn.WHITE, new Point(3, 0));
         Figure king = new King("K__W", Util.Turn.WHITE, new Point(4, 0));
-        Figure knightR = new Knight("LK_W", Util.Turn.WHITE, new Point(5, 0));
-        Figure bishopR = new Bishop("LB_W", Util.Turn.WHITE, new Point(6, 0));
+        Figure bishopR = new Bishop("LB_W", Util.Turn.WHITE, new Point(5, 0));
+        Figure knightR = new Knight("LK_W", Util.Turn.WHITE, new Point(6, 0));
         Figure rookR = new Rook("LR_W", Util.Turn.WHITE, new Point(7, 0));
 
         figures.add(knightL);
@@ -54,8 +58,8 @@ public class Util {
         bishopL = new Bishop("RB_B", Util.Turn.BLACK, new Point(2, 7));
         queen = new Queen("Q__B", Util.Turn.BLACK, new Point(3, 7));
         king = new King("K__B", Util.Turn.BLACK, new Point(4, 7));
-        knightR = new Knight("RK_B", Util.Turn.BLACK, new Point(5, 7));
-        bishopR = new Bishop("LB_B", Util.Turn.BLACK, new Point(6, 7));
+        bishopR = new Bishop("LB_B", Util.Turn.BLACK, new Point(5, 7));
+        knightR = new Knight("RK_B", Util.Turn.BLACK, new Point(6, 7));
         rookR = new Rook("LR_B", Util.Turn.BLACK, new Point(7, 7));
 
         figures.add(knightL);

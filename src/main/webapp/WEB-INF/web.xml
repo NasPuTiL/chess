@@ -10,6 +10,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>EmailServlet</servlet-name>
-        <url-pattern>/EmailForm</url-pattern>
+        <url-pattern>/getPossibleMoves</url-pattern>
+        <url-pattern>/refreshData</url-pattern>
     </servlet-mapping>
 </web-app>

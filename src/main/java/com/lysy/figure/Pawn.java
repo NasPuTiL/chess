@@ -28,7 +28,7 @@ public class Pawn extends Figure {
 
 
         tmpY = nextStep(tmpY);
-        if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvailable(posibleMoves, figures, tmpX, tmpY)) {
+        if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvailable(figures, tmpX, tmpY)) {
             posibleMoves.add(new Point(tmpX, tmpY));
         }
 
@@ -49,7 +49,7 @@ public class Pawn extends Figure {
         if (startY == startDir) {
             tmpX = startX;
             tmpY = nextStep(tmpY);
-            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvailable(posibleMoves, figures, tmpX, tmpY)) {
+            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvailable(figures, tmpX, tmpY)) {
                 posibleMoves.add(new Point(tmpX, tmpY));
             }
         }
@@ -57,6 +57,15 @@ public class Pawn extends Figure {
         //TODO: Beating in flight
 
         return posibleMoves;
+    }
+
+    private boolean checkFieldIsAvailable(List<Figure> figures, int x, int y) {
+        for (Figure f : figures) {
+            if (f.getPosition().getX() == x && f.getPosition().getY() == y) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private boolean checkEnemyPositionFor(int tmpX, int tmpY) {

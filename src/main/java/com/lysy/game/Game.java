@@ -66,7 +66,7 @@ public class Game {
         Figure figure = move.getFigure();
         Point oldPoint = move.getPosition();
 
-        if (!check(move)) {
+        if (!isCheck(move)) {
             return false;
         }
         for (Figure f : figures) {
@@ -78,7 +78,7 @@ public class Game {
             List<Point> listOfPossibleMoves = f.getListOfPossibleMoves(figures);
             for (Point p : listOfPossibleMoves) {
                 f.setPosition(p);
-                if (!check(move)) {
+                if (!isCheck(move)) {
                     f.setPosition(position);
                     return false;
                 }
@@ -123,15 +123,19 @@ public class Game {
         }
         List<Point> listOfPossibleMoves = new ArrayList<>(figure.getListOfPossibleMoves(figures));
 
-        if (check(move)) {
+        if (isCheck(move)) {
             return false;
         }
 
         return listOfPossibleMoves.contains(move.getPosition());
     }
 
-    private boolean check(Move move) {
+    private boolean isCheck(Move move) {
         Figure figure = move.getFigure();
+        return isCheck(figure);
+    }
+
+    private boolean isCheck(Figure figure) {
         Util.Turn turn = figure.getTurn();
         Point point = findKingPositionForOpositeSide(figure);
         for (Figure f : figures) {
@@ -156,6 +160,17 @@ public class Game {
         return null;
     }
 
+    private Point findKingPosition(Figure figure) {
+        Util.Turn turn = figure.getTurn();
+        for (Figure f : figures) {
+            if (f.getTurn() == turn && f instanceof King) {
+                return f.getPosition();
+            }
+        }
+        return null;
+    }
+
+
     private Move getMove() {
         Scanner scan = new Scanner(System.in);
         String line;
@@ -171,20 +186,14 @@ public class Game {
     }
 
     public List<String> findPossibleMoves(String square) {
-        int i = square.charAt(0) - 97;
-        int j = (int) square.charAt(1) - 49;
-        Figure figure = findFigure(j, i);
+        Move move = new Move(square);
+        Figure figure = findFigure(move.getY(), move.getX());
 
-        List<Point> listOfPossibleMoves = figure.getListOfPossibleMoves(Game.getFigures());
+        List<Point> listOfLegalMoves = getListOfLegalMoves(figure);
+
         List<String> results = new ArrayList<>();
-        for (Point point : listOfPossibleMoves) {
-            i = (int) point.getX() + 97;
-            j = (int) point.getY() + 49;
-            char x = (char) i;
-            char y = (char) j;
-            String res = String.valueOf(x);
-            res += String.valueOf(y);
-            results.add(res);
+        for (Point point : listOfLegalMoves) {
+            results.add(Move.getAlphabeticalPosition(point));
         }
         return results;
     }
@@ -193,16 +202,99 @@ public class Game {
         return figures;
     }
 
-    public boolean isCorrectTurn(String turn) {
+    private String convertTurn(String turn) {
         if (turn.equals("w")) {
-            turn = "WHITE";
+
+            return "WHITE";
         } else {
-            turn = "BLACK";
+            return "BLACK";
         }
-        if (Game.turn.getValue().equals(turn)) {
-            return true;
+    }
+
+    public void setTurn(String turn) {
+        Game.turn.setValue(convertTurn(turn));
+    }
+
+    public void setFigurePosition(String source, String target) {
+        int i = source.charAt(0) - 97;
+        int j = (int) source.charAt(1) - 49;
+        Figure figure = findFigure(j, i);
+
+        i = target.charAt(0) - 97;
+        j = (int) target.charAt(1) - 49;
+        Figure figureToRemove = findFigure(j, i);
+
+        i = target.charAt(0) - 97;
+        j = (int) target.charAt(1) - 49;
+
+        if (figureToRemove != null) {
+            figures.remove(figureToRemove);
+        }
+        figure.setPosition(new Point(i, j));
+    }
+
+    public String getStatus(String source) {
+        int i = source.charAt(0) - 97;
+        int j = (int) source.charAt(1) - 49;
+        Figure figure = findFigure(j, i);
+
+        if (isMate(figure)) {
+            return "is_MATE";
+        }
+        return "";
+    }
+
+    private boolean isMate(Figure f) {
+        Point position = f.getPosition();
+        List<Point> listOfPossibleMoves = f.getListOfPossibleMoves(figures);
+        for (Point p : listOfPossibleMoves) {
+            f.setPosition(p);
+            if (!isCheck(f)) {
+                f.setPosition(position);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private List<Point> getListOfLegalMoves(Figure figure) {
+        List<Point> possibleMoves = figure.getListOfPossibleMoves(figures);
+        List<Point> toRemove = new ArrayList<>();
+        Point originalPosition = figure.getPosition();
+
+        Point kingPosition = findKingPosition(figure);
+        for (Point p : possibleMoves) {
+            figure.setPosition(p);
+            for (Figure f : figures) {
+                if (f.getTurn() != figure.getTurn()) {
+                    identifyBlockedField(figure, f, p, kingPosition, toRemove);
+                }
+            }
+        }
+        figure.setPosition(originalPosition);
+        possibleMoves.removeAll(toRemove);
+        return possibleMoves;
+    }
+
+    private void identifyBlockedField(Figure figure, Figure f, Point point, Point kingPosition, List<Point> toRemove) {
+        List<Figure> potentialDenseFigure = new ArrayList<>();
+        for(Figure potentialDense : figures) {
+            if(potentialDense.getPosition().equals(point)) {
+                potentialDenseFigure.add(potentialDense);
+            }
+        }
+
+        if (figure instanceof King == false) {
+            if(potentialDenseFigure.contains(f)) {
+                return;
+            }
+            if (f.getListOfPossibleMoves(figures).contains(kingPosition)) {
+                toRemove.add(point);
+            }
         } else {
-            return false;
+            if (f.getListOfPossibleMoves(figures).contains(point)) {
+                toRemove.add(point);
+            }
         }
     }
 }

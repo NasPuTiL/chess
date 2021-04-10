@@ -31,6 +31,30 @@ function isMoveLegal(source, target, response) {
     return false;
 }
 
+function refreshDataInBackend(source, target, turn) {
+    return $.ajax({
+        url: "refreshData",
+        type: "GET",
+        data: {
+            source: source,
+            target: target,
+            turn: turn
+        },
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,
+        success: function (res) {
+            console.log('Comunication with backend: OK');
+            setPossibleMoves(res);
+            console.log(game.possibleMoves)
+        },
+        error: function (obj) {
+            setPossibleMoves(null);
+            alert('Error! ' + JSON.stringify(obj));
+        }
+    })
+}
+
 function onDrop(source, target, piece, newPos, oldPos, orientation) {
     removeGreySquares()
     if(target == 'offboard') {
@@ -38,17 +62,16 @@ function onDrop(source, target, piece, newPos, oldPos, orientation) {
     }
 
     if(!isMoveLegal(source, target, game.possibleMoves)) {
-        console.log('test1');
         return 'snapback'
     }
-    console.log('test2');
     flip();
+    refreshDataInBackend(source, target, game.turn);
     return 'drop';
 }
 
 function getInformationFromBackend(square, piece, turn) {
     return $.ajax({
-        url: "EmailForm",
+        url: "getPossibleMoves",
         type: "GET",
         data: {
             square: square,

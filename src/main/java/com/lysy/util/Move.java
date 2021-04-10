@@ -9,6 +9,13 @@ public class Move {
     private Point point;
     private Figure figure;
     private String name;
+    private int x;
+    private int y;
+
+    public Move(String line) {
+        this.x = line.charAt(0) - 97;
+        this.y = (int) line.charAt(1) - 49;
+    }
 
     public Move(String line, List<Figure> figures, Util.Turn turn) {
         if (line.length() != 7) {
@@ -27,6 +34,14 @@ public class Move {
         }
     }
 
+    public static String getAlphabeticalPosition(Point point) {
+        int i = (int) point.getX() + 97;
+        int j = (int) point.getY() + 49;
+        char x = (char) i;
+        char y = (char) j;
+        return String.valueOf(x) + String.valueOf(y);
+    }
+
     public boolean isFigure() {
         return this.figure == null;
     }
@@ -37,5 +52,13 @@ public class Move {
 
     public Point getPosition() {
         return this.point;
+    }
+
+    public int getX() {
+        return this.x;
+    }
+
+    public int getY() {
+        return this.y;
     }
 }
