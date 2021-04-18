@@ -1,6 +1,7 @@
 package com.lysy.figure;
 
 import com.lysy.game.Game;
+import com.lysy.util.LastMove;
 import com.lysy.util.Util;
 
 import java.awt.*;
@@ -19,7 +20,7 @@ public class Pawn extends Figure {
 
     @Override
     public List<Point> getListOfPossibleMoves(List<Figure> figures) {
-        List<Point> posibleMoves = new ArrayList<>();
+        List<Point> possibleMoves = new ArrayList<>();
         int startX = (int) this.position.getX();
         int startY = (int) this.position.getY();
 
@@ -29,20 +30,20 @@ public class Pawn extends Figure {
 
         tmpY = nextStep(tmpY);
         if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvailable(figures, tmpX, tmpY)) {
-            posibleMoves.add(new Point(tmpX, tmpY));
+            possibleMoves.add(new Point(tmpX, tmpY));
         }
 
         tmpX = startX - 1;
         if (checkEnemyPositionFor(tmpX, tmpY)) {
-            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvailable(posibleMoves, figures, tmpX, tmpY)) {
-                posibleMoves.add(new Point(tmpX, tmpY));
+            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvailable(possibleMoves, figures, tmpX, tmpY)) {
+                possibleMoves.add(new Point(tmpX, tmpY));
             }
         }
 
         tmpX = startX + 1;
         if (checkEnemyPositionFor(tmpX, tmpY)) {
-            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvailable(posibleMoves, figures, tmpX, tmpY)) {
-                posibleMoves.add(new Point(tmpX, tmpY));
+            if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvailable(possibleMoves, figures, tmpX, tmpY)) {
+                possibleMoves.add(new Point(tmpX, tmpY));
             }
         }
 
@@ -50,13 +51,30 @@ public class Pawn extends Figure {
             tmpX = startX;
             tmpY = nextStep(tmpY);
             if (tmpX >= 0 && tmpX < Game.sizeOfMap && tmpY >= 0 && tmpY < Game.sizeOfMap && checkFieldIsAvailable(figures, tmpX, tmpY)) {
-                posibleMoves.add(new Point(tmpX, tmpY));
+                possibleMoves.add(new Point(tmpX, tmpY));
             }
         }
 
-        //TODO: Beating in flight
+        addBeatingFlight(possibleMoves);
 
-        return posibleMoves;
+        return possibleMoves;
+    }
+
+    private void addBeatingFlight(List<Point> possibleMoves) {
+        if (!LastMove.isLastMoveWasDoubleMove()) {
+            return;
+        }
+        if (this.position.y == 3 && LastMove.getLastMove().y == 3 ||
+                this.position.y == 4 && LastMove.getLastMove().y == 4) {
+            Figure lastMovedFigure = LastMove.getLastMovedFigure();
+            int dif = this.position.x - LastMove.getLastMove().x;
+            if (Math.abs(dif) < 2) {
+                if (lastMovedFigure instanceof Pawn && !lastMovedFigure.color.equals(this.color)) {
+                    int xDir = this.color.equals(Util.Turn.WHITE) ? 5 : 2;
+                    possibleMoves.add(new Point(this.position.x - dif, xDir));
+                }
+            }
+        }
     }
 
     private boolean checkFieldIsAvailable(List<Figure> figures, int x, int y) {

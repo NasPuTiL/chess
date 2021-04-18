@@ -20,6 +20,8 @@
 <script src="js/chessboard-1.0.0.min.js"></script>
 
 <script>
+onInit();
+
     var config = {
         draggable: true,
         dropOffBoard: 'snapback',
@@ -28,8 +30,7 @@
         onDragStart: onDragStart,
         onDrop: onDrop,
         onMouseoutSquare: onMouseoutSquare,
-        onMouseoverSquare: onMouseoverSquare,
-        onSnapEnd: onSnapEnd
+        onMouseoverSquare: onMouseoverSquare
     };
     board = Chessboard('myBoard', config)
 </script>

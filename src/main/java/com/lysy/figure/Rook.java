@@ -7,9 +7,11 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Rook extends Figure {
+public class Rook extends Figure implements MovementValidation{
+    private boolean isMoved;
     public Rook(String name, Util.Turn turn, Point position) {
         super(name, turn, position);
+        this.isMoved = false;
     }
 
     @Override
@@ -63,5 +65,21 @@ public class Rook extends Figure {
         }
 
         return possibleMoves;
+    }
+
+    public boolean isMoved() {
+        return isMoved;
+    }
+
+    @Override
+    public void setPosition(Point position) {
+        this.position = position;
+        moved();
+    }
+
+    public void moved() {
+        if(!this.isMoved) {
+            this.isMoved = true;
+        }
     }
 }

@@ -12,5 +12,6 @@
         <servlet-name>EmailServlet</servlet-name>
         <url-pattern>/getPossibleMoves</url-pattern>
         <url-pattern>/refreshData</url-pattern>
+        <url-pattern>/initData</url-pattern>
     </servlet-mapping>
 </web-app>

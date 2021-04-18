@@ -1,6 +1,7 @@
 package com.lysy.util;
 
 import com.lysy.figure.Figure;
+import com.lysy.game.Game;
 
 import java.awt.*;
 import java.util.List;
@@ -11,7 +12,7 @@ public class Move {
     private String name;
     private int x;
     private int y;
-
+    public static LastMove lastMove = null;
     public Move(String line) {
         this.x = line.charAt(0) - 97;
         this.y = (int) line.charAt(1) - 49;
@@ -27,7 +28,7 @@ public class Move {
         String y = line.substring(5, 6);
 
         this.name = name;
-        this.figure = figures.stream().filter(f -> f.getName().equals(name)).findAny().orElse(null);
+        this.figure = Game.findFigure(name);
         this.point = new Point(Integer.parseInt(x), Integer.parseInt(y));
         if (this.figure == null || !this.figure.getTurn().equals(turn)) {
             this.figure = null;

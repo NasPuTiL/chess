@@ -56,6 +56,14 @@ public abstract class Figure implements Cloneable{
         this.position = position;
     }
 
+    public void setPosition(Point position, boolean realChangeOfPosition) {
+        if(!realChangeOfPosition) {
+            this.position = position;
+        } else {
+            setPosition(position);
+        }
+    }
+
     public Object clone() throws CloneNotSupportedException
     {
         return super.clone();

@@ -1,5 +1,11 @@
+body {
+    background-image: url("img/background.jpg");
+    background-color: #cccccc;
+}
 #myBoard{
-    width: 400px;
+    width: 45%;
     margin-left: auto;
+    margin-top: 2%;
+    vertical-align:middle;
     margin-right: auto;
 }
