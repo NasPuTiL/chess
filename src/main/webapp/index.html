@@ -12,19 +12,25 @@
 </head>
 <body>
 <div id="myBoard"></div>
-<button id="startBtn">Start Position</button>
-<button id="clearBtn">Clear Board</button>
+<!--<button id="startBtn">Start Position</button>-->
+<!--<button id="clearBtn">Clear Board</button>-->
+<!--<button type="submit">Submit</button>-->
 <script src="js/chess.js"></script>
 <script src="js/jquery-3.5.1.min.js"></script>
 <script src="js/chessboard-1.0.0.min.js"></script>
+
 <script>
+onInit();
+
     var config = {
         draggable: true,
         dropOffBoard: 'snapback',
         sparePieces: false,
-        onDrop: onDrop,
         position: 'start',
-        onDragStart: onDragStart
+        onDragStart: onDragStart,
+        onDrop: onDrop,
+        onMouseoutSquare: onMouseoutSquare,
+        onMouseoverSquare: onMouseoverSquare
     };
     board = Chessboard('myBoard', config)
 </script>

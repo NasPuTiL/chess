@@ -1,12 +1,12 @@
-package com.lysy.back.figure;
+package com.lysy.figure;
 
-import com.lysy.back.util.Util;
+import com.lysy.util.Util;
 
 import java.awt.*;
 import java.util.List;
 
 
-public abstract class Figure {
+public abstract class Figure implements Cloneable{
     protected Util.Turn color;
     protected Point position;
     protected String name;
@@ -54,5 +54,18 @@ public abstract class Figure {
 
     public void setPosition(Point position) {
         this.position = position;
+    }
+
+    public void setPosition(Point position, boolean realChangeOfPosition) {
+        if(!realChangeOfPosition) {
+            this.position = position;
+        } else {
+            setPosition(position);
+        }
+    }
+
+    public Object clone() throws CloneNotSupportedException
+    {
+        return super.clone();
     }
 }

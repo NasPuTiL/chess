@@ -1,10 +1,11 @@
-package com.lysy.back.figure;
+package com.lysy.figure;
 
-import com.lysy.back.game.Game;
-import com.lysy.back.util.Util;
+import com.lysy.game.Game;
+import com.lysy.util.Util;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Knight extends Figure {
